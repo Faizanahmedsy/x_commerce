@@ -2,6 +2,14 @@
 
 import * as React from "react";
 import Link from "next/link";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons";
@@ -18,6 +26,7 @@ import { SITE_CONFIG } from "../../../site.config";
 import { NavItems } from "@/constants";
 import { Button } from "../ui/button";
 import { ArrowBigRight, ShoppingBag } from "lucide-react";
+import CardItems from "./CardItems";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -72,57 +81,23 @@ export function DesktopNavbar() {
         ))}
 
         <NavigationMenuItem>
-          <Button className="gap-2">
-            <ShoppingBag /> View Cart
-          </Button>
+          <Sheet>
+            <SheetTrigger>
+              <Button className="gap-2">
+                <ShoppingBag /> View Cart
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>My Cart</SheetTitle>
+                <SheetDescription>
+                  This is a list of items in your cart.
+                </SheetDescription>
+                <CardItems />
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
         </NavigationMenuItem>
-        {/* <NavigationMenuItem>
-          <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      {SITE_CONFIG.brandName}
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      We build stuff and make it look good while doing it.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/mission" title="Our Mission">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/leadership" title="Our LeaderShip">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/team" title="Our Team">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem> */}
-        {/* <NavigationMenuItem>
-          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );

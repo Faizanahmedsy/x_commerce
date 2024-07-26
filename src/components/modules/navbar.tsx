@@ -3,14 +3,28 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { NavItems } from "@/constants";
 import { cn } from "@/lib/utils";
-import { Earth, MenuIcon } from "lucide-react";
+import { Earth, Loader2, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { SITE_CONFIG } from "../../../site.config";
 import { Icons } from "../icons";
-import { DesktopNavbar } from "./navbar-dropdown";
+import dynamic from "next/dynamic";
+
 import Image from "next/image";
+// import { DesktopNavbar } from "./navbar-dropdown";
+
+const DesktopNavbar = dynamic(
+  () => import("./navbar-dropdown").then((mod) => mod.DesktopNavbar),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-full flex justify-center items-center">
+        <Loader2 className="mr-2 h-[30%] w-[30%] animate-spin" />
+      </div>
+    ),
+  }
+);
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

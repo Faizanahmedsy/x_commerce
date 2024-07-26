@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ShoppingCart, Heart, Star } from "lucide-react";
 import Section from "../shared/Section";
 import { AnimatedCard } from "../shared/AnimatedCard";
+import { cn } from "@/lib/utils";
 
 const ProductCard = ({
   name,
@@ -32,7 +33,10 @@ const ProductCard = ({
       onHoverEnd={() => setIsHovered(false)}
     >
       <div
-        className={`relative aspect-w-4 aspect-h-3 ${bgColor} flex items-center justify-center`}
+        className={cn(
+          "relative  h-56  flex items-center justify-center",
+          bgColor
+        )}
       >
         <ShoppingCart className={`w-24 h-24 ${iconColor}`} />
         <motion.div
