@@ -126,7 +126,6 @@ export default function Products() {
   const products = [
     {
       id: "1",
-
       name: "Luxury Watch",
       description: "Elegant timepiece for any occasion",
       price: 299,
@@ -136,7 +135,6 @@ export default function Products() {
     },
     {
       id: "2",
-
       name: "Designer Sunglasses",
       description: "Stylish protection for your eyes",
       price: 159,
@@ -146,7 +144,6 @@ export default function Products() {
     },
     {
       id: "3",
-
       name: "Leather Wallet",
       description: "Classic accessory for the modern individual",
       price: 79,
