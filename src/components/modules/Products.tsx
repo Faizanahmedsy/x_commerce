@@ -89,7 +89,7 @@ const ProductCard = ({
 export default function Products() {
   const products = [
     {
-      name: "Luxury Watch",
+      name: "Cheat your partner",
       description: "Elegant timepiece for any occasion",
       price: 299,
       rating: 4,
@@ -97,7 +97,7 @@ export default function Products() {
       iconColor: "text-blue-500",
     },
     {
-      name: "Designer Sunglasses",
+      name: "Smoke Cigrates",
       description: "Stylish protection for your eyes",
       price: 159,
       rating: 5,
@@ -105,7 +105,7 @@ export default function Products() {
       iconColor: "text-yellow-500",
     },
     {
-      name: "Leather Wallet",
+      name: "Drink Alcohol or Take Drugs",
       description: "Classic accessory for the modern individual",
       price: 79,
       rating: 4,
@@ -113,7 +113,7 @@ export default function Products() {
       iconColor: "text-brown-500",
     },
     {
-      name: "Wireless Earbuds",
+      name: "Scroll Reels",
       description: "Crystal-clear audio on the go",
       price: 129,
       rating: 4,
