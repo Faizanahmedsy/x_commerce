@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, Heart, Star } from "lucide-react";
 import Section from "../shared/Section";
 import { AnimatedCard } from "../shared/AnimatedCard";
 import useGlobalState from "@/store";
+import { cn } from "@/lib/utils";
 
 const ProductCard = ({
   id,
@@ -25,10 +26,18 @@ const ProductCard = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useGlobalState();
+  const { cart, addItem } = useGlobalState();
+
+  const [isInCart, setIsInCart] = useState(false);
+
+  useEffect(() => {
+    setIsInCart(cart.some((item) => item.id === id));
+  }, [cart, id]);
 
   const handleAddToCart = () => {
-    addItem({ id, name, description, price, rating, quantity });
+    if (!isInCart) {
+      addItem({ id, name, description, price, rating, quantity });
+    }
   };
 
   return (
@@ -79,13 +88,17 @@ const ProductCard = ({
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-indigo-600">${price}</span>
           <motion.button
-            className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg"
+            className={cn(
+              "flex items-center space-x-2 px-4 py-2 rounded-lg text-white",
+              isInCart ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-600"
+            )}
             whileHover={{ scale: 1.05, backgroundColor: "#4338ca" }}
             whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
+            disabled={isInCart}
           >
             <ShoppingCart className="w-5 h-5" />
-            <span>Add to Cart</span>
+            <span>{isInCart ? "Added" : "Add to Cart"}</span>
           </motion.button>
         </div>
         <div className="flex items-center mt-4">
@@ -113,7 +126,8 @@ export default function Products() {
   const products = [
     {
       id: "1",
-      name: "Cheat your partner",
+
+      name: "Luxury Watch",
       description: "Elegant timepiece for any occasion",
       price: 299,
       rating: 4,
@@ -122,7 +136,8 @@ export default function Products() {
     },
     {
       id: "2",
-      name: "Smoke Cigrates",
+
+      name: "Designer Sunglasses",
       description: "Stylish protection for your eyes",
       price: 159,
       rating: 5,
@@ -131,7 +146,8 @@ export default function Products() {
     },
     {
       id: "3",
-      name: "Drink Alcohol or Take Drugs",
+
+      name: "Leather Wallet",
       description: "Classic accessory for the modern individual",
       price: 79,
       rating: 4,
@@ -140,7 +156,8 @@ export default function Products() {
     },
     {
       id: "4",
-      name: "Scroll Reels",
+
+      name: "Wireless Earbuds",
       description: "Crystal-clear audio on the go",
       price: 129,
       rating: 4,
