@@ -1,62 +1,63 @@
+"use client";
+
 import React from "react";
 import { Button } from "../ui/button";
-import { Delete, Trash, Trash2, Trash2Icon } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import useGlobalState from "@/store";
 
 type Props = {};
 
-export default function CardItems({}: Props) {
+const CardItems = ({}: Props) => {
+  const { cart, removeItem } = useGlobalState();
+
   return (
     <div>
-      <CardItem
-        title="Apple Watch"
-        description="Series 7"
-        price={399}
-        image="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
-      />
-      <CardItem
-        title="Apple Watch"
-        description="Series 7"
-        price={399}
-        image="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
-      />
-      <CardItem
-        title="Apple Watch"
-        description="Series 7"
-        price={399}
-        image="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
-      />
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        cart.map((item) => (
+          <CardItem
+            key={item.id}
+            title={item.name}
+            description={item.description}
+            price={item.price}
+            quantity={item.quantity}
+            onRemove={() => removeItem(item.id)}
+          />
+        ))
+      )}
     </div>
   );
-}
+};
 
 const CardItem = ({
   title,
   description,
   price,
-  image,
+  quantity,
+  onRemove,
 }: {
   title: string;
   description: string;
   price: number;
-  image: string;
+  quantity: number;
+  onRemove: () => void;
 }) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between p-4 border-b">
+      <div className="flex flex-col">
+        <h3 className="text-lg font-semibold">{title}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
+        <p className="text-sm text-gray-500">Quantity: {quantity}</p>
+      </div>
       <div className="flex items-center gap-4">
-        <img src={image} alt={title} className="w-16 h-16" />
-        <div>
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <p className="text-sm text-gray-500">{description}</p>
-        </div>
-      </div>
-      <div>
         <p className="text-lg font-semibold">${price}</p>
+        <Button variant="destructive" onClick={onRemove}>
+          <Trash2 className="w-5 h-5" />
+        </Button>
       </div>
-
-      {/* //remove from cart button  */}
-      <Button variant={"destructive"}>
-        <Trash2 />
-      </Button>
     </div>
   );
 };
+
+export default CardItems;

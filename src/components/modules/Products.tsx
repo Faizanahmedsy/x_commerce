@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { ShoppingCart, Heart, Star } from "lucide-react";
 import Section from "../shared/Section";
 import { AnimatedCard } from "../shared/AnimatedCard";
+import useGlobalState from "@/store";
 
 const ProductCard = ({
+  id,
   name,
   description,
   price,
@@ -13,6 +15,7 @@ const ProductCard = ({
   bgColor,
   iconColor,
 }: {
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -21,6 +24,12 @@ const ProductCard = ({
   iconColor: string;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const { addItem } = useGlobalState();
+
+  const handleAddToCart = () => {
+    addItem({ id, name, description, price, rating, quantity });
+  };
 
   return (
     <motion.div
@@ -70,10 +79,21 @@ const ProductCard = ({
             className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg"
             whileHover={{ scale: 1.05, backgroundColor: "#4338ca" }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="w-5 h-5" />
             <span>Add to Cart</span>
           </motion.button>
+        </div>
+        <div className="flex items-center mt-4">
+          <span className="text-sm text-gray-600 mr-2">Quantity:</span>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-12 border border-gray-300 rounded p-1"
+          />
         </div>
       </div>
       <motion.div
@@ -89,6 +109,7 @@ const ProductCard = ({
 export default function Products() {
   const products = [
     {
+      id: "1",
       name: "Cheat your partner",
       description: "Elegant timepiece for any occasion",
       price: 299,
@@ -97,6 +118,7 @@ export default function Products() {
       iconColor: "text-blue-500",
     },
     {
+      id: "2",
       name: "Smoke Cigrates",
       description: "Stylish protection for your eyes",
       price: 159,
@@ -105,6 +127,7 @@ export default function Products() {
       iconColor: "text-yellow-500",
     },
     {
+      id: "3",
       name: "Drink Alcohol or Take Drugs",
       description: "Classic accessory for the modern individual",
       price: 79,
@@ -113,6 +136,7 @@ export default function Products() {
       iconColor: "text-brown-500",
     },
     {
+      id: "4",
       name: "Scroll Reels",
       description: "Crystal-clear audio on the go",
       price: 129,
@@ -121,6 +145,7 @@ export default function Products() {
       iconColor: "text-green-500",
     },
     {
+      id: "5",
       name: "Smart Fitness Tracker",
       description: "Your personal health companion",
       price: 99,
@@ -129,6 +154,7 @@ export default function Products() {
       iconColor: "text-purple-500",
     },
     {
+      id: "6",
       name: "Gourmet Coffee Maker",
       description: "Barista-quality brews at home",
       price: 199,
@@ -144,8 +170,8 @@ export default function Products() {
         Featured Products
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-        {products.map((product, index) => (
-          <ProductCard key={index} {...product} />
+        {products.map((product) => (
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
 
